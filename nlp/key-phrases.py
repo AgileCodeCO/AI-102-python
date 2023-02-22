@@ -16,10 +16,6 @@ try:
         {"id": "2", "language": "es", "text": "A mi me encanta el fútbol americano y la formula 1!"}
     ]
 
-    for document in documents:
-        print(
-            "Asking key-phrases on '{}' (id: {})".format(document['text'], document['id']))
-
     response = text_analytics_client.extract_key_phrases(documents=documents)
 
     for document in response:

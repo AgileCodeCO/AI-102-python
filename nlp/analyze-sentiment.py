@@ -13,16 +13,19 @@ text_analytics_client = TextAnalyticsClient(endpoint, AzureKeyCredential(subscri
 try:
     documents = [       
         {"id": "1", "language": "en", "text": "My cat might need to see a veterinarian because is feeling sick."},
-        {"id": "2", "language": "es", "text": "A mi me encanta el fútbol americano y la formula 1!"}
+        {"id": "2", "language": "es", "text": "A mi me encanta el fútbol americano y la formula 1!"},
+        {"id": "3", "language": "en", "text": "I'm happy and sad"}
     ]
 
-    response = text_analytics_client.recognize_entities(documents=documents)
+    response = text_analytics_client.analyze_sentiment(documents=documents)
     
     for result in response:
         print("Document Id: ", result.id)
-        print("\tEntities:")
-        for entity in result.entities:
-            print("\t\t", entity.text, f"- category: {entity.category}", f"- score: {entity.confidence_score}")
+        print("\tSentiment:", result.sentiment)
+        for sentence in result.sentences:
+            print("\tSentence:", sentence.text)
+            print("\tSentence sentiment:", sentence.sentiment)
+            print("\t\t", "positive:", sentence.confidence_scores.positive, "neutral:", sentence.confidence_scores.neutral, "negative:", sentence.confidence_scores.negative)
 
 except Exception as err:
     print("Encountered exception. {}".format(err))
